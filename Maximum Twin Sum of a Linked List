@@ -1,0 +1,37 @@
+class Solution:
+    def pairSum(self, head: Optional[ListNode]) -> int:
+        pointer = head
+        count = 0
+        while pointer:
+            pointer = pointer.next
+            count += 1
+        
+        middle = count // 2
+
+        half = None
+        curr = head
+        track = 0 
+        while curr:
+            if track == middle:
+                half = curr
+            curr = curr.next
+            track +=1
+
+    
+        reversed_half = None
+        curr_half = half
+        while curr_half:
+            nxt = curr_half.next
+            curr_half.next = reversed_half
+            reversed_half = curr_half
+            curr_half = nxt
+     
+        result = 0
+        original = head
+        while reversed_half:
+            curr_sum = reversed_half.val + original.val
+            result = max(result, curr_sum)
+            reversed_half = reversed_half.next
+            original = original.next
+
+        return result
